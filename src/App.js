@@ -22,8 +22,23 @@ function App() {
     setTodos(newTodos);
   }
 
+  function completeTodo(todoId) {
+    const newTodos = todos.map((todo) =>
+      todo.id === todoId
+        ? {
+            ...todo,
+            completed: !todo.completed,
+          }
+        : todo
+    );
+
+    setTodos(newTodos);
+  }
+
+  console.log(todos);
+
   return (
-    <TodoContext.Provider value={{ removeTodo }}>
+    <TodoContext.Provider value={{ removeTodo, completeTodo }}>
       <div className="App">
         <TodoForm addTodo={addTodo} />
         <TodoList todos={todos} />
