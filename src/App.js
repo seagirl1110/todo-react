@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from 'react';
 import TodoForm from './components/todoForm';
 import TodoList from './components/todoList';
+import TodoContext from './context/TodoContext';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -15,11 +16,19 @@ function App() {
 
     setTodos([...todos, newTodo]);
   }
+
+  function removeTodo(todoId) {
+    const newTodos = todos.filter((todo) => todo.id !== todoId);
+    setTodos(newTodos);
+  }
+
   return (
-    <div className="App">
-      <TodoForm addTodo={addTodo} />
-      <TodoList todos={todos} />
-    </div>
+    <TodoContext.Provider value={{ removeTodo }}>
+      <div className="App">
+        <TodoForm addTodo={addTodo} />
+        <TodoList todos={todos} />
+      </div>
+    </TodoContext.Provider>
   );
 }
 
